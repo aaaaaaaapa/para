@@ -20,15 +20,33 @@ export const createTitle = (text='Найди пару') => {
 
 }
 
+export const createTimerAndCounter = () => {
+
+    const divTC = createElement('div', 'timer-counter');
+    const timerText = createElement('p', 'timer');
+    const counterText = createElement('p', 'counter');
+
+    timerText.textContent = 'Время: 00:00';
+    counterText.textContent = 'Кол-во очков: 0';
+
+    divTC.append(timerText, counterText);
+
+    return {
+        divTC,
+        timerText,
+        counterText
+    };
+}
+
 const createRow = (arr) => {
 
     const divRow = createElement('div', 'row');
     for (const elem of arr) {
 
-        const square = createElement('div', 'square', elem);
+        const square = createElement('div', 'square', 'closed');
+        square.setAttribute('img', elem);
         const img = createElement('img', 'img', 'dis');
         img.src = `./images/${elem}.png`;
-        square.setAttribute('state', 'closed');
 
         square.append(img);
         divRow.append(square);
@@ -46,4 +64,12 @@ export const createField = (arr) => {
         divField.append(divRow);
     }
     return divField;
+}
+
+export const createBtn = (text) => {
+
+    const btn = createElement('button', 'btn');
+    btn.textContent = text;
+    return btn;
+
 }

@@ -14,11 +14,13 @@ body {
 
 .main {
     display: flex;
+    height: 100vh;
 }
 
 .container {
+    display: none;
     width: 500px;
-    height: 600px;
+    height: 650px;
     margin: 50px auto;
     padding: 30px;
     background-color: white;
@@ -35,8 +37,19 @@ body {
     font-size: 38px;
 }
 
+.timer-counter {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.timer, .counter {
+    text-align: right;
+    margin-bottom: 5px;
+}
+
 .field {
-    margin: 50px 0;
+    margin: 30px 0;
 }
 
 .row {
@@ -55,21 +68,38 @@ body {
     border-radius: 5px;
 }
 
-.square[state=closed] {
-    background-image: none;
+.closed {
     background-color: rgb(228, 181, 120);
     border-radius: 5px;
     border: 2px solid rgb(179, 133, 73);
 }
 
-.square[state=open] {
-    cursor: auto;
-}
 
 .img {
-    margin: 18px 19px;
+    margin: 18px;
 }
 
 .dis {
     display: none;
+}
+
+.btn {
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+    top: 1;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 22px;
+}
+
+.btn:hover {
+    background-color: rgb(246, 194, 126);
+}
+
+.again {
+    margin-left: 150px;
+    margin-top: 20px;
 }

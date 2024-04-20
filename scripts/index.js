@@ -1,49 +1,55 @@
 import { createCardArr } from "./arrayConv.js";
-import { createField, createTitle } from "./createElements.js";
+import { createField, createTimerAndCounter, createTitle, createBtn } from "./createElements.js";
+import { handleCardClick } from './handleCardClick.js';
+import { timeGenerator } from "./timer.js";
+
+const main = document.querySelector('.main');
 const container = document.querySelector('.container');
-
 const cardNum = 16;
-let firstCard, secondCard;
 
-let cardsArr = [
+const cardsArr = [
     'bee', 'crocodile', 'macaw', 'gorilla', 
     'tiger', 'monkey', 'chameleon', 'piranha',
     'anaconda', 'cockatoo', 'sloth', 'toucan'
 ];
-
 let cardFieldArr = createCardArr(cardsArr, cardNum);
+let interval;
 
+const startGame = () => {
 
-const handleCardClick = (event) => {
-    const tg = event.target;
-    if (tg.closest('div').classList.contains('square') && tg.getAttribute('state') !== 'open') {
-        tg.querySelector('.img').classList.remove('dis');
-        tg.setAttribute('state', 'open');
-        if (!firstCard) {
-            firstCard = tg;
+    container.innerHTML = '';
+    container.style.display = 'block';
+
+    const { divTitle } = createTitle();
+    const { divTC, timerText } = createTimerAndCounter();
+    const divField = createField(cardFieldArr);
+    const againBtn = createBtn('Начать заново');
+
+    divField.addEventListener('click', handleCardClick);
+    againBtn.addEventListener('click', startGame);
+    againBtn.classList.add('again');
+
+    container.append(divTitle, divTC, divField);
+
+    interval = setInterval(() => {
+        timeGenerator(timerText);
+        if (document.querySelectorAll('.matched').length === cardNum) {
+            clearInterval(interval);
+            container.append(againBtn);
         }
-        else {
-            secondCard = tg;
-            if (firstCard.classList !== secondCard.classList) {
-                setTimeout(() => {
-                    firstCard.querySelector('.img').classList.add('dis');
-                    firstCard.setAttribute('state', 'closed');
-                    secondCard.querySelector('.img').classList.add('dis');
-                    secondCard.setAttribute('state', 'closed');
-                }, 500)
-            }
-        }
-    }
+    }, 1000);
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const { divTitle } = createTitle();
-    const divField = createField(cardFieldArr);
+    const startBtn = createBtn('Начать игру');
 
-    divField.addEventListener('click', handleCardClick);
+    startBtn.addEventListener('click', () => {
+        startBtn.style.display = 'none';
+        startGame();
+    });
 
-    container.append(divTitle, divField);
-
+    main.append(startBtn);
 
 });
