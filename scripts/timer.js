@@ -1,6 +1,7 @@
+let seconds = 0, minutes = 0;
+
 export const timeGenerator = (text) => {
     
-    let seconds = 0, minutes = 0;
     seconds += 1;
 
     if (seconds >= 60) {
@@ -13,4 +14,8 @@ export const timeGenerator = (text) => {
     text.textContent = `Время: ${minutesValue}:${secondsValue}`;
 
 };
+
+export const cleanTimer = () => {
+    seconds = 0, minutes = 0;
+}
 
