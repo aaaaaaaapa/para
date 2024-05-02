@@ -66,10 +66,35 @@ export const createField = (arr) => {
     return divField;
 }
 
-export const createBtn = (text) => {
+export const createBtn = (text, className) => {
 
-    const btn = createElement('button', 'btn');
+    const btn = createElement('button', 'btn', className);
     btn.textContent = text;
     return btn;
+
+}
+
+export const createStartBtn = () => {
+
+    const {h1} = createTitle('Выберите размер поля');
+    const startBtn8 = createBtn('4x2', 'start-btn');
+    const startBtn12 = createBtn('4x3', 'start-btn');
+    const startBtn16 = createBtn('4x4', 'start-btn');
+    const startBtn20 = createBtn('4x5', 'start-btn')
+
+    startBtn8.num = 8;
+    startBtn12.num = 12;
+    startBtn16.num = 16;
+    startBtn20.num = 20;
+
+    h1.classList.add('field-title');
+
+    return {
+        h1,
+        startBtn8,
+        startBtn12,
+        startBtn16,
+        startBtn20
+    }
 
 }

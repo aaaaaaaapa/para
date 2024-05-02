@@ -15,12 +15,22 @@ body {
 .main {
     display: flex;
     height: 100vh;
+    flex-direction: column;
+}
+
+.start {
+    display: flex;
+    height: 45%;
+    flex-direction: column;
+    margin: 10% auto;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .container {
     display: none;
-    width: 500px;
-    height: 650px;
+    min-width: 500px;
+    height: fit-content;
     margin: 50px auto;
     padding: 30px;
     background-color: white;
@@ -99,7 +109,7 @@ body {
     background-color: rgb(246, 194, 126);
 }
 
-.again {
-    margin-left: 150px;
-    margin-top: 20px;
+
+.field-title {
+    margin-bottom: 50px;
 }

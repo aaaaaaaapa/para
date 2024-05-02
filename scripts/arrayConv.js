@@ -9,14 +9,14 @@ export const fisherYatesShuffle = (arr) => {
 
 export const createCardArr = (arr, num) => {
 
-    const randomNum = Math.round(Math.random() * Math.sqrt(num));
-
+    const randomNum = Math.round(Math.random() * 2);
+    
     const halfArr = arr.slice(randomNum, Math.round(num / 2 + randomNum));
     const sortedArr = fisherYatesShuffle([...halfArr, ...halfArr]);
     let newArr = [];
 
-    for (let i = 0; i < sortedArr.length; i += Math.sqrt(num)) {
-        newArr.push(sortedArr.slice(i, i + Math.sqrt(num)));
+    for (let i = 0; i < sortedArr.length; i += 4) {
+        newArr.push(sortedArr.slice(i, i + 4));
     }
     return newArr;
 }

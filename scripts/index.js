@@ -1,12 +1,13 @@
 import { createCardArr } from "./arrayConv.js";
-import { createField, createTimerAndCounter, createTitle, createBtn } from "./createElements.js";
+import { createField, createTimerAndCounter, createTitle, createBtn, createStartBtn } from "./createElements.js";
 import { handleCardClick } from './handleCardClick.js';
 import { timeGenerator, cleanTimer } from "./timer.js";
 
 const main = document.querySelector('.main');
 const container = document.querySelector('.container');
+const startCont = document.querySelector('.start');
 
-const cardNum = 16;
+let cardNum, cardFieldArr;
 
 const cardsArr = [
     'bee', 'crocodile', 'macaw', 'gorilla', 
@@ -14,10 +15,11 @@ const cardsArr = [
     'anaconda', 'cockatoo', 'sloth', 'toucan'
 ];
 
-let cardFieldArr = createCardArr(cardsArr, cardNum);
-
 
 const renderField = () => {
+
+    container.innerHTML = '';
+    cardFieldArr = createCardArr(cardsArr, cardNum);
 
     const { divTitle } = createTitle();
     const { divTC } = createTimerAndCounter();
@@ -28,23 +30,18 @@ const renderField = () => {
 
 }
 
+
 const createAgainBtn = () => {
 
     const againBtn = createBtn('Начать заново');
-    againBtn.addEventListener('click', startGame);
+    againBtn.addEventListener('click', () => {
+        againBtn.remove();
+        startCont.style.display = 'flex';
+        container.style.display = 'none';
+    });
     againBtn.classList.add('again');
 
-    container.append(againBtn);
-
-}
-
-const createStartBtn = () => {
-
-    const startBtn = createBtn('Начать игру');
-    startBtn.classList.add('start-btn');
-
-    startBtn.addEventListener('click', startGame);
-    main.append(startBtn);
+    main.append(againBtn);
 
 }
 
@@ -52,23 +49,41 @@ const setGameInterval = () => {
 
     cleanTimer();
     let interval = setInterval(() => {
-        timeGenerator(document.querySelector('.timer'));
         if (document.querySelectorAll('.matched').length === cardNum) {
             clearInterval(interval);
             createAgainBtn();
+        }
+        else {
+            timeGenerator(document.querySelector('.timer'));
         }
     }, 1000);
 
 }
 
-const startGame = (event) => {
+const startGame = (btn) => {
 
-    container.innerHTML = '';
-    event.target.style.display = 'none';
+    cardNum = btn.num;
+
+    startCont.style.display = 'none';
     container.style.display = 'block';
     renderField();
     setGameInterval();
 
 }
 
-document.addEventListener('DOMContentLoaded', createStartBtn);
+
+const renderStartBtn = () => {
+
+    const { h1, startBtn8, startBtn12, startBtn16, startBtn20 } = createStartBtn()
+
+    startCont.addEventListener('click', (event) => {
+        if (event.target.closest('button')) {
+            startGame(event.target);
+        }
+    });
+
+    startCont.append(h1, startBtn8, startBtn12, startBtn16, startBtn20);
+
+}
+
+document.addEventListener('DOMContentLoaded', renderStartBtn);
